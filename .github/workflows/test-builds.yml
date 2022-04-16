@@ -3,7 +3,7 @@
 # Do test builds to catch compile errors
 #
 
-name: CI
+name: Test Builds
 
 on:
   pull_request:

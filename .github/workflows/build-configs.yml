@@ -1,9 +1,10 @@
 name: Build Configs
 
 on:
-  release:
-    types: [created]
-
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -38,28 +39,20 @@ jobs:
       run: |
         if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
         echo "::set-output name=filename::Default-NoProbe-${AVTMP}.bin"
-        cp Configuration\ Files/Aquila\ Templates/Default-NoProbe/Configuration.h Marlin/Configuration.h
-        cp Configuration\ Files/Aquila\ Templates/Default-NoProbe/Configuration_adv.h Marlin/Configuration_adv.h
+        cp config/aquila_templates/Default-NoProbe/Configuration.h Marlin/Configuration.h
+        cp config/aquila_templates/Default-NoProbe/Configuration_adv.h Marlin/Configuration_adv.h
         sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
         pio run
         mkdir temp
         mv .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
       env:
         AQUILA_VER: ${{ matrix.chip }}
-    - name: Get release
-      id: get_release
-      uses: bruceadams/get-release@v1.2.2
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload Build Binary
+      uses: actions/upload-artifact@v3
       with:
-        upload_url: ${{ steps.get_release.outputs.upload_url }}
-        asset_path: temp/build.bin
-        asset_name: ${{ steps.build_configs.outputs.filename }}
-        asset_content_type: application/x-binary
+        name: ${{ steps.build_configs.outputs.filename }}
+        path: temp/build.bin
+  
   Build-BLTouch:
     name: Build BL-Touch Files
     runs-on: ubuntu-latest
@@ -94,8 +87,8 @@ jobs:
         if ($HS); then HSTMP=-HS; else HSTMP=; fi;
         if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
         echo "::set-output name=filename::BLTouch-${GRID}x${GRID}${HSTMP}-${AVTMP}.bin"
-        cp Configuration\ Files/Aquila\ Templates/BLTouch-3x3/Configuration.h Marlin/Configuration.h
-        cp Configuration\ Files/Aquila\ Templates/BLTouch-3x3/Configuration_adv.h Marlin/Configuration_adv.h
+        cp config/aquila_templates/BLTouch-3x3/Configuration.h Marlin/Configuration.h
+        cp config/aquila_templates/BLTouch-3x3/Configuration_adv.h Marlin/Configuration_adv.h
         sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
         sed -i "s/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $GRID/g" Marlin/Configuration.h
         if ($HS); then TEMP=; else TEMP='\/\/'; fi;
@@ -107,20 +100,12 @@ jobs:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
         HS: ${{ matrix.highspeed }}
-    - name: Get release
-      id: get_release
-      uses: bruceadams/get-release@v1.2.2
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload Build Binary
+      uses: actions/upload-artifact@v3
       with:
-        upload_url: ${{ steps.get_release.outputs.upload_url }}
-        asset_path: temp/build.bin
-        asset_name: ${{ steps.build_configs.outputs.filename }}
-        asset_content_type: application/x-binary
+        name: ${{ steps.build_configs.outputs.filename }}
+        path: temp/build.bin
+  
   Build-Manual-Mesh:
     name: Build Manual-Mesh Files
     runs-on: ubuntu-latest
@@ -153,8 +138,8 @@ jobs:
       run: |
         if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
         echo "::set-output name=filename::ManualMesh-${GRID}x${GRID}-${AVTMP}.bin"
-        cp Configuration\ Files/Aquila\ Templates/ManualMesh-3x3/Configuration.h Marlin/Configuration.h
-        cp Configuration\ Files/Aquila\ Templates/ManualMesh-3x3/Configuration_adv.h Marlin/Configuration_adv.h
+        cp config/aquila_templates/ManualMesh-3x3/Configuration.h Marlin/Configuration.h
+        cp config/aquila_templates/ManualMesh-3x3/Configuration_adv.h Marlin/Configuration_adv.h
         sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
         sed -i "s/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $GRID/g" Marlin/Configuration.h
         pio run
@@ -163,20 +148,12 @@ jobs:
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
-    - name: Get release
-      id: get_release
-      uses: bruceadams/get-release@v1.2.2
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload Build Binary
+      uses: actions/upload-artifact@v3
       with:
-        upload_url: ${{ steps.get_release.outputs.upload_url }}
-        asset_path: temp/build.bin
-        asset_name: ${{ steps.build_configs.outputs.filename }}
-        asset_content_type: application/x-binary
+        name: ${{ steps.build_configs.outputs.filename }}
+        path: temp/build.bin
+ 
   Build-UBL-BLTouch:
     name: Build BL-Touch UBL Files
     runs-on: ubuntu-latest
@@ -211,8 +188,8 @@ jobs:
         if ($HS); then HSTMP=-HS; else HSTMP=; fi;
         if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
         echo "::set-output name=filename::UBL-BLTouch-${GRID}x${GRID}${HSTMP}-${AVTMP}.bin"
-        cp Configuration\ Files/Aquila\ Templates/UBL-BLTouch-10x10/Configuration.h Marlin/Configuration.h
-        cp Configuration\ Files/Aquila\ Templates/UBL-BLTouch-10x10/Configuration_adv.h Marlin/Configuration_adv.h
+        cp config/aquila_templates/UBL-BLTouch-10x10/Configuration.h Marlin/Configuration.h
+        cp config/aquila_templates/UBL-BLTouch-10x10/Configuration_adv.h Marlin/Configuration_adv.h
         sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
         sed -i "s/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $GRID/g" Marlin/Configuration.h
         if ($HS); then TEMP=; else TEMP='\/\/'; fi;
@@ -224,20 +201,12 @@ jobs:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
         HS: ${{ matrix.highspeed }}
-    - name: Get release
-      id: get_release
-      uses: bruceadams/get-release@v1.2.2
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload Build Binary
+      uses: actions/upload-artifact@v3
       with:
-        upload_url: ${{ steps.get_release.outputs.upload_url }}
-        asset_path: temp/build.bin
-        asset_name: ${{ steps.build_configs.outputs.filename }}
-        asset_content_type: application/x-binary
+        name: ${{ steps.build_configs.outputs.filename }}
+        path: temp/build.bin
+  
   Build-UBL-NoProbe:
     name: Build NoProbe UBL Files
     runs-on: ubuntu-latest
@@ -270,8 +239,8 @@ jobs:
       run: |
         if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
         echo "::set-output name=filename::UBL-NoProbe-${GRID}x${GRID}-${AVTMP}.bin"
-        cp Configuration\ Files/Aquila\ Templates/UBL-NoProbe-3x3/Configuration.h Marlin/Configuration.h
-        cp Configuration\ Files/Aquila\ Templates/UBL-NoProbe-3x3/Configuration_adv.h Marlin/Configuration_adv.h
+        cp config/aquila_templates/UBL-NoProbe-3x3/Configuration.h Marlin/Configuration.h
+        cp config/aquila_templates/UBL-NoProbe-3x3/Configuration_adv.h Marlin/Configuration_adv.h
         sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
         sed -i "s/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $GRID/g" Marlin/Configuration.h
         pio run
@@ -280,17 +249,8 @@ jobs:
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
-    - name: Get release
-      id: get_release
-      uses: bruceadams/get-release@v1.2.2
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload Build Binary
+      uses: actions/upload-artifact@v3
       with:
-        upload_url: ${{ steps.get_release.outputs.upload_url }}
-        asset_path: temp/build.bin
-        asset_name: ${{ steps.build_configs.outputs.filename }}
-        asset_content_type: application/x-binary
+        name: ${{ steps.build_configs.outputs.filename }}
+        path: temp/build.bin
