@@ -36,6 +36,8 @@ jobs:
         pip install --upgrade platformio
     - name: Run PlatformIO
       id: build_configs
+      env:
+        AQUILA_VER: ${{ matrix.chip }}
       run: |
         if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
         echo "::set-output name=filename::Default-NoProbe-${AVTMP}.bin"
@@ -45,8 +47,6 @@ jobs:
         pio run
         mkdir temp
         mv .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
-      env:
-        AQUILA_VER: ${{ matrix.chip }}
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -83,6 +83,10 @@ jobs:
         pip install --upgrade platformio
     - name: Run PlatformIO
       id: build_configs
+      env:
+        AQUILA_VER: ${{ matrix.chip }}
+        GRID: ${{ matrix.grid }}
+        HS: ${{ matrix.highspeed }}
       run: |
         if ($HS); then HSTMP=-HS; else HSTMP=; fi;
         if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
@@ -96,10 +100,6 @@ jobs:
         pio run
         mkdir temp
         mv .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
-      env:
-        AQUILA_VER: ${{ matrix.chip }}
-        GRID: ${{ matrix.grid }}
-        HS: ${{ matrix.highspeed }}
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -135,6 +135,9 @@ jobs:
         pip install --upgrade platformio
     - name: Run PlatformIO
       id: build_configs
+      env:
+        AQUILA_VER: ${{ matrix.chip }}
+        GRID: ${{ matrix.grid }}
       run: |
         if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
         echo "::set-output name=filename::ManualMesh-${GRID}x${GRID}-${AVTMP}.bin"
@@ -145,9 +148,6 @@ jobs:
         pio run
         mkdir temp
         mv .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
-      env:
-        AQUILA_VER: ${{ matrix.chip }}
-        GRID: ${{ matrix.grid }}
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -184,6 +184,10 @@ jobs:
         pip install --upgrade platformio
     - name: Run PlatformIO
       id: build_configs
+      env:
+        AQUILA_VER: ${{ matrix.chip }}
+        GRID: ${{ matrix.grid }}
+        HS: ${{ matrix.highspeed }}
       run: |
         if ($HS); then HSTMP=-HS; else HSTMP=; fi;
         if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
@@ -197,10 +201,6 @@ jobs:
         pio run
         mkdir temp
         mv .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
-      env:
-        AQUILA_VER: ${{ matrix.chip }}
-        GRID: ${{ matrix.grid }}
-        HS: ${{ matrix.highspeed }}
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -236,6 +236,9 @@ jobs:
         pip install --upgrade platformio
     - name: Run PlatformIO
       id: build_configs
+      env:
+        AQUILA_VER: ${{ matrix.chip }}
+        GRID: ${{ matrix.grid }}
       run: |
         if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
         echo "::set-output name=filename::UBL-NoProbe-${GRID}x${GRID}-${AVTMP}.bin"
@@ -246,9 +249,6 @@ jobs:
         pio run
         mkdir temp
         mv .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
-      env:
-        AQUILA_VER: ${{ matrix.chip }}
-        GRID: ${{ matrix.grid }}
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
