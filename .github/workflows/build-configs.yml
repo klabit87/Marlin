@@ -32,7 +32,7 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
     - name: Set up Python
       uses: actions/setup-python@v2
-    - name: Install Update & Install PlatformIO
+    - name: Run OS Update & Install PlatformIO
       run: |
         sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
         python -m pip install --upgrade pip
@@ -81,7 +81,7 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
     - name: Set up Python
       uses: actions/setup-python@v2
-    - name: Install Update & Install PlatformIO
+    - name: Run OS Update & Install PlatformIO
       run: |
         sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
         python -m pip install --upgrade pip
@@ -135,7 +135,7 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
     - name: Set up Python
       uses: actions/setup-python@v2
-    - name: Install Update & Install PlatformIO
+    - name: Run OS Update & Install PlatformIO
       run: |
         sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
         python -m pip install --upgrade pip
@@ -186,7 +186,7 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
     - name: Set up Python
       uses: actions/setup-python@v2
-    - name: Install Update & Install PlatformIO
+    - name: Run OS Update & Install PlatformIO
       run: |
         sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
         python -m pip install --upgrade pip
@@ -240,7 +240,7 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
     - name: Set up Python
       uses: actions/setup-python@v2
-    - name: Install Update & Install PlatformIO
+    - name: Run OS Update & Install PlatformIO
       run: |
         sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
         python -m pip install --upgrade pip
