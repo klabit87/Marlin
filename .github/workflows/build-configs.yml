@@ -32,8 +32,10 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
     - name: Set up Python
       uses: actions/setup-python@v2
-    - name: Install PlatformIO
+    - name: Install Update & Install PlatformIO
       run: |
+        sudo apt update && sudo apt upgrade -y
+        sudo apt install python3-wheel -y && sudo apt autoremove -y
         python -m pip install --upgrade pip
         pip install --upgrade platformio
     - name: Run PlatformIO
@@ -79,8 +81,10 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
     - name: Set up Python
       uses: actions/setup-python@v2
-    - name: Install PlatformIO
+    - name: Install Update & Install PlatformIO
       run: |
+        sudo apt update && sudo apt upgrade -y
+        sudo apt install python3-wheel -y && sudo apt autoremove -y
         python -m pip install --upgrade pip
         pip install --upgrade platformio
     - name: Run PlatformIO
@@ -131,8 +135,10 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
     - name: Set up Python
       uses: actions/setup-python@v2
-    - name: Install PlatformIO
+    - name: Install Update & Install PlatformIO
       run: |
+        sudo apt update && sudo apt upgrade -y
+        sudo apt install python3-wheel -y && sudo apt autoremove -y
         python -m pip install --upgrade pip
         pip install --upgrade platformio
     - name: Run PlatformIO
@@ -180,8 +186,10 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
     - name: Set up Python
       uses: actions/setup-python@v2
-    - name: Install PlatformIO
+    - name: Install Update & Install PlatformIO
       run: |
+        sudo apt update && sudo apt upgrade -y
+        sudo apt install python3-wheel -y && sudo apt autoremove -y
         python -m pip install --upgrade pip
         pip install --upgrade platformio
     - name: Run PlatformIO
@@ -232,8 +240,10 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
     - name: Set up Python
       uses: actions/setup-python@v2
-    - name: Install PlatformIO
+    - name: Install Update & Install PlatformIO
       run: |
+        sudo apt update && sudo apt upgrade -y
+        sudo apt install python3-wheel -y && sudo apt autoremove -y
         python -m pip install --upgrade pip
         pip install --upgrade platformio
     - name: Run PlatformIO
