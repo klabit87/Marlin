@@ -97,13 +97,11 @@ jobs:
         if ($HS); then TEMP=; else TEMP='\/\/'; fi;
         sed -i "s/[^ ]*#define BLTOUCH_HS_MODE/$TEMP#define BLTOUCH_HS_MODE/g" Marlin/Configuration_adv.h
         pio run
-        mkdir temp
-        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.outputs.filename }}
-        path: temp/build.bin
+        name: BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
   
   Build-Manual-Mesh:
     name: Build Manual-Mesh Files
@@ -152,8 +150,8 @@ jobs:
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.outputs.filename }}
-        path: temp/build.bin
+        name: Default-NoProbe-${{ matrix.chip }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/firmware*.bin
  
   Build-UBL-BLTouch:
     name: Build BL-Touch UBL Files
