@@ -15,7 +15,7 @@ PLATFORMIO_CONF=platformio.ini
 ifeq ($(HS), true)
  DISABLE_HS_BLTOUCH=
 else
- DISABLE_HS_BLTOUCH='\/\/'
+ DISABLE_HS_BLTOUCH=\/\/
 endif
 
 clean:
