@@ -51,7 +51,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: ${{ steps.build_configs.outputs.filename }}
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ env.AQUILA_VER }}/*.bin
+        path: '.pio/build/STM32F103RET6_voxelab_aquila_${{ env.AQUILA_VER }}/*.bin'
   
   Build-BLTouch:
     name: Build BL-Touch Files
