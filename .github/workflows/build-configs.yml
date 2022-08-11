@@ -43,14 +43,11 @@ jobs:
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
-      run: |
-        echo "::set-output name=filename::Default-NoProbe-${AVTMP}.bin"
-        sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
-        pio run
+      run: make -f Makefile.voxelab Default-NoProbe
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.outputs.filename }}
+        name: Default-NoProbe-${{ matrix.chip }}.bin
         path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
   
   Build-BLTouch:

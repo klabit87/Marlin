@@ -1,0 +1,35 @@
+# Set needed variables.
+AQUILA_CONFIG_TPL_DIR=config/aquila_templates
+MARLIN_DIR=Marlin
+PLATFORMIO=pio
+PLATFORMIO_MAIN_DIR=.pio
+PLATFORMIO_BUILD_DIR=$(PLATFORMIO_MAIN_DIR)/build
+PLATFORMIO_CONF=platformio.ini
+
+
+# Evaluate HS (High Speed) variable if it's been enabled.
+ifeq ($(HS), true)
+ HSTMP=-HS
+else
+ HSTMP=
+endif
+
+# Evaluate AQUILA_VER variable to find chip version for the Aquila printer.
+ifeq ($(AQUILA_VER), G32)
+ AVTMP=G32
+else
+ AVTMP=N32
+endif
+
+clean:
+	rm -rf $(ALT_BUILD_OUTPUT_DIR)
+	rm -rf $(PLATFORMIO_BUILD_DIR)
+	rm -rf $(PLATFORMIO_MAIN_DIR)
+.PHONY: clean
+
+Default-NoProbe: clean
+	cp $(AQUILA_CONFIG_TPL_DIR)/Default-NoProbe/Configuration.h $(MARLIN_DIR)/Configuration.h
+	cp $(AQUILA_CONFIG_TPL_DIR)/Default-NoProbe/Configuration_adv.h $(MARLIN_DIR)/Configuration_adv.h
+	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
+	$(PLATFORMIO) run
+.PHONY: Default-NoProbe
