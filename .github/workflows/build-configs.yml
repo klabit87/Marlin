@@ -47,13 +47,11 @@ jobs:
         echo "::set-output name=filename::Default-NoProbe-${AVTMP}.bin"
         sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
         pio run
-        mkdir temp
-        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
         name: ${{ steps.build_configs.outputs.filename }}
-        path: temp/build.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ env.AQUILA_VER }}/*.bin
   
   Build-BLTouch:
     name: Build BL-Touch Files
