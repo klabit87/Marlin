@@ -4,9 +4,9 @@ on:
   schedule:
     - cron: '0 0 * * *'
   push:
-    branches: [ main,dev ]
+    branches: [ marlin-2.1.1 ]
   pull_request:
-    branches: [ main,dev ]
+    branches: [ marlin-2.1.1 ]
   workflow_dispatch:
 
 jobs:
