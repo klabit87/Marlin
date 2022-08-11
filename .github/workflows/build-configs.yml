@@ -42,14 +42,12 @@ jobs:
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
-      run: |
-        echo "::set-output name=filename::Default-NoProbe-${AVTMP}.bin"
-        make -f Makefile.voxelab Default-NoProbe
+      run: make -f Makefile.voxelab Default-NoProbe
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.outputs.filename }}
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ env.AQUILA_VER }}/*.bin
+        name: Default-NoProbe-${{ matrix.chip }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
   
   Build-BLTouch:
     name: Build BL-Touch Files
@@ -87,26 +85,14 @@ jobs:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
         HS: ${{ matrix.highspeed }}
-      run: |
-        if ($HS); then HSTMP=-HS; else HSTMP=; fi;
-        if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
-        echo "::set-output name=filename::BLTouch-${GRID}x${GRID}${HSTMP}-${AVTMP}.bin"
-        cp config/aquila_templates/BLTouch-3x3/Configuration.h Marlin/Configuration.h
-        cp config/aquila_templates/BLTouch-3x3/Configuration_adv.h Marlin/Configuration_adv.h
-        sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
-        sed -i "s/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $GRID/g" Marlin/Configuration.h
-        if ($HS); then TEMP=; else TEMP='\/\/'; fi;
-        sed -i "s/[^ ]*#define BLTOUCH_HS_MODE/$TEMP#define BLTOUCH_HS_MODE/g" Marlin/Configuration_adv.h
-        pio run
-        mkdir temp
-        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
+      run: make -f Makefile.voxelab BLTouch
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.outputs.filename }}
-        path: temp/build.bin
+        name: BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
   
-  Build-Manual-Mesh:
+  Build-ManualMesh:
     name: Build Manual-Mesh Files
     runs-on: ubuntu-latest
     strategy:
@@ -140,24 +126,15 @@ jobs:
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
-      run: |
-        if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
-        echo "::set-output name=filename::ManualMesh-${GRID}x${GRID}-${AVTMP}.bin"
-        cp config/aquila_templates/ManualMesh-3x3/Configuration.h Marlin/Configuration.h
-        cp config/aquila_templates/ManualMesh-3x3/Configuration_adv.h Marlin/Configuration_adv.h
-        sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
-        sed -i "s/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $GRID/g" Marlin/Configuration.h
-        pio run
-        mkdir temp
-        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
+      run: make -f Makefile.voxelab ManualMesh
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.outputs.filename }}
-        path: temp/build.bin
+        name: ManualMesh-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
  
   Build-UBL-BLTouch:
-    name: Build BL-Touch UBL Files
+    name: Build UBL with BL-Touch Files
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -192,27 +169,15 @@ jobs:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
         HS: ${{ matrix.highspeed }}
-      run: |
-        if ($HS); then HSTMP=-HS; else HSTMP=; fi;
-        if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
-        echo "::set-output name=filename::UBL-BLTouch-${GRID}x${GRID}${HSTMP}-${AVTMP}.bin"
-        cp config/aquila_templates/UBL-BLTouch-10x10/Configuration.h Marlin/Configuration.h
-        cp config/aquila_templates/UBL-BLTouch-10x10/Configuration_adv.h Marlin/Configuration_adv.h
-        sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
-        sed -i "s/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $GRID/g" Marlin/Configuration.h
-        if ($HS); then TEMP=; else TEMP='\/\/'; fi;
-        sed -i "s/[^ ]*#define BLTOUCH_HS_MODE/$TEMP#define BLTOUCH_HS_MODE/g" Marlin/Configuration_adv.h
-        pio run
-        mkdir temp
-        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
+      run: make -f Makefile.voxelab UBL-BLTouch
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.outputs.filename }}
-        path: temp/build.bin
+        name: UBL-BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
   
   Build-UBL-NoProbe:
-    name: Build NoProbe UBL Files
+    name: Build UBL with NoProbe Files
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -245,18 +210,9 @@ jobs:
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
-      run: |
-        if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
-        echo "::set-output name=filename::UBL-NoProbe-${GRID}x${GRID}-${AVTMP}.bin"
-        cp config/aquila_templates/UBL-NoProbe-3x3/Configuration.h Marlin/Configuration.h
-        cp config/aquila_templates/UBL-NoProbe-3x3/Configuration_adv.h Marlin/Configuration_adv.h
-        sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
-        sed -i "s/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $GRID/g" Marlin/Configuration.h
-        pio run
-        mkdir temp
-        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
+      run: make -f Makefile.voxelab UBL-NoProbe
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.outputs.filename }}
-        path: temp/build.bin
+        name: UBL-NoProbe-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
