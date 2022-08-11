@@ -50,7 +50,7 @@ jobs:
         sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
         pio run
         mkdir temp
-        mv .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
+        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -105,7 +105,7 @@ jobs:
         sed -i "s/[^ ]*#define BLTOUCH_HS_MODE/$TEMP#define BLTOUCH_HS_MODE/g" Marlin/Configuration_adv.h
         pio run
         mkdir temp
-        mv .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
+        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -155,7 +155,7 @@ jobs:
         sed -i "s/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $GRID/g" Marlin/Configuration.h
         pio run
         mkdir temp
-        mv .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
+        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -210,7 +210,7 @@ jobs:
         sed -i "s/[^ ]*#define BLTOUCH_HS_MODE/$TEMP#define BLTOUCH_HS_MODE/g" Marlin/Configuration_adv.h
         pio run
         mkdir temp
-        mv .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
+        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -260,7 +260,7 @@ jobs:
         sed -i "s/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $GRID/g" Marlin/Configuration.h
         pio run
         mkdir temp
-        mv .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
+        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:

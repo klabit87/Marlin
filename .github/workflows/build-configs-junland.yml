@@ -61,7 +61,7 @@ jobs:
         sed -i "s/[^ ]*#define BLTOUCH_HS_MODE/$TEMP#define BLTOUCH_HS_MODE/g" Marlin/Configuration_adv.h
         pio run
         mkdir temp
-        mv .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
+        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
