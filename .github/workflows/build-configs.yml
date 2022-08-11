@@ -43,10 +43,7 @@ jobs:
       env:
         AQUILA_VER: ${{ matrix.chip }}
       run: |
-        if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
         echo "::set-output name=filename::Default-NoProbe-${AVTMP}.bin"
-        cp config/aquila_templates/Default-NoProbe/Configuration.h Marlin/Configuration.h
-        cp config/aquila_templates/Default-NoProbe/Configuration_adv.h Marlin/Configuration_adv.h
         sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
         pio run
         mkdir temp
