@@ -93,7 +93,7 @@ jobs:
         name: BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}.bin
         path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
   
-  Build-Manual-Mesh:
+  Build-ManualMesh:
     name: Build Manual-Mesh Files
     runs-on: ubuntu-latest
     strategy:
@@ -127,21 +127,12 @@ jobs:
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
-      run: |
-        if [ "$AQUILA_VER" = G32 ]; then AVTMP="G32"; else AVTMP="N32"; fi;
-        echo "::set-output name=filename::ManualMesh-${GRID}x${GRID}-${AVTMP}.bin"
-        cp config/aquila_templates/ManualMesh-3x3/Configuration.h Marlin/Configuration.h
-        cp config/aquila_templates/ManualMesh-3x3/Configuration_adv.h Marlin/Configuration_adv.h
-        sed -i "s/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$AQUILA_VER/g" platformio.ini
-        sed -i "s/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $GRID/g" Marlin/Configuration.h
-        pio run
-        mkdir temp
-        mv -v .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/*.bin temp/build.bin
+      run: make -f Makefile.voxelab ManualMesh
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: Default-NoProbe-${{ matrix.chip }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_$AQUILA_VER/firmware*.bin
+        name: ManualMesh-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
  
   Build-UBL-BLTouch:
     name: Build BL-Touch UBL Files
