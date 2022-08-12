@@ -1,10 +1,11 @@
 # Set needed variables.
-AQUILA_CONFIG_TPL_DIR=config/aquila_templates
-MARLIN_DIR=Marlin
-PLATFORMIO=pio
-PLATFORMIO_MAIN_DIR=.pio
-PLATFORMIO_BUILD_DIR=$(PLATFORMIO_MAIN_DIR)/build
-PLATFORMIO_CONF=platformio.ini
+AQUILA_VER ?= G32
+AQUILA_CONFIG_TPL_DIR := config/aquila_templates
+MARLIN_DIR := Marlin
+PLATFORMIO := pio
+PLATFORMIO_MAIN_DIR := .pio
+PLATFORMIO_BUILD_DIR := $(PLATFORMIO_MAIN_DIR)/build
+PLATFORMIO_CONF := platformio.ini
 
 # Evaluate HS (High Speed) variable if it's been enabled.
 ifeq ($(HS), true)
