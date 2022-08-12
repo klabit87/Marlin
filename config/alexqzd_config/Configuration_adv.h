@@ -902,7 +902,7 @@
   #endif
 
   // Provide Z stepper positions for more rapid convergence in bed alignment.
-  // Requires triple stepper drivers (i.e., set NUM_Z_STEPPER_DRIVERS to 3)
+
   //#define Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS
   #if ENABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
     // Define Stepper XY positions for Z1, Z2, Z3 corresponding to

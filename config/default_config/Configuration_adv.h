@@ -570,31 +570,6 @@
   #endif
 #endif
 
-//
-// For Z set the number of stepper drivers
-//
-#define NUM_Z_STEPPER_DRIVERS 1   // (1-4) Z options change based on how many
-
-#if NUM_Z_STEPPER_DRIVERS > 1
-  // Enable if Z motor direction signals are the opposite of Z1
-  //#define INVERT_Z2_VS_Z_DIR
-  //#define INVERT_Z3_VS_Z_DIR
-  //#define INVERT_Z4_VS_Z_DIR
-
-  //#define Z_MULTI_ENDSTOPS
-  #if ENABLED(Z_MULTI_ENDSTOPS)
-    #define Z2_USE_ENDSTOP          _XMAX_
-    #define Z2_ENDSTOP_ADJUSTMENT   0
-    #if NUM_Z_STEPPER_DRIVERS >= 3
-      #define Z3_USE_ENDSTOP        _YMAX_
-      #define Z3_ENDSTOP_ADJUSTMENT 0
-    #endif
-    #if NUM_Z_STEPPER_DRIVERS >= 4
-      #define Z4_USE_ENDSTOP        _ZMAX_
-      #define Z4_ENDSTOP_ADJUSTMENT 0
-    #endif
-  #endif
-#endif
 
 /**
  * Dual X Carriage
@@ -777,7 +752,7 @@
   #endif
 
   // Provide Z stepper positions for more rapid convergence in bed alignment.
-  // Requires triple stepper drivers (i.e., set NUM_Z_STEPPER_DRIVERS to 3)
+
   //#define Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS
   #if ENABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
     // Define Stepper XY positions for Z1, Z2, Z3 corresponding to
