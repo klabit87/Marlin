@@ -46,10 +46,8 @@ jobs:
         AQUILA_VER: ${{ matrix.chip }}
         FIRMWARE_NAME: Default-NoProbe-${{ matrix.chip }}
       run: |
-	# Inject firmware binary version so that the next step can pick it up.
-        echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
-	# Run the build. 
         FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab Default-NoProbe
+        echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -93,10 +91,8 @@ jobs:
         HS: ${{ matrix.highspeed }}
         FIRMWARE_NAME: BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}
       run: |
-	# Inject firmware binary version so that the next step can pick it up.
-	echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
-	# Run the build. 
-	FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab BLTouch
+        FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab BLTouch
+        echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -139,10 +135,8 @@ jobs:
         GRID: ${{ matrix.grid }}
         FIRMWARE_NAME: ManualMesh-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}
       run: |
-	# Inject firmware binary version so that the next step can pick it up.
+        FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab ManualMesh
         echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
-	# Run the build.
-	FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab ManualMesh
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -186,10 +180,8 @@ jobs:
         HS: ${{ matrix.highspeed }}
         FIRMWARE_NAME: UBL-BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}
       run: |
-        # Inject firmware binary version so that the next step can pick it up.
+        FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab UBL-BLTouch
         echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
-	# Run the build.
-	FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab UBL-BLTouch
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -232,10 +224,8 @@ jobs:
         GRID: ${{ matrix.grid }}
         FIRMWARE_NAME: UBL-NoProbe-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}
       run: |
-        # Inject firmware binary version so that the next step can pick it up.
-        echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
-	# Run the build.
         FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab UBL-NoProbe
+        echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
