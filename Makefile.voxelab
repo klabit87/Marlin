@@ -28,7 +28,7 @@ Default-NoProbe: clean
 	cp $(AQUILA_CONFIG_TPL_DIR)/Default-NoProbe/Configuration.h $(MARLIN_DIR)/Configuration.h
 	cp $(AQUILA_CONFIG_TPL_DIR)/Default-NoProbe/Configuration_adv.h $(MARLIN_DIR)/Configuration_adv.h
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
-	$(PLATFORMIO) run $(PLATFORMIO_FLAGS)
+	FIMWARE_NAME=$(FIRMWARE_NAME) $(PLATFORMIO) run $(PLATFORMIO_FLAGS)
 .PHONY: Default-NoProbe
 
 BLTouch: clean
@@ -37,7 +37,7 @@ BLTouch: clean
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
 	sed -i 's/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $(GRID)/g' $(MARLIN_DIR)/Configuration.h
 	sed -i 's/[^ ]*#define BLTOUCH_HS_MODE/$(DISABLE_HS_BLTOUCH)#define BLTOUCH_HS_MODE/g' Marlin/Configuration_adv.h
-	$(PLATFORMIO) run $(PLATFORMIO_FLAGS)
+	FIMWARE_NAME=$(FIRMWARE_NAME) $(PLATFORMIO) run $(PLATFORMIO_FLAGS)
 .PHONY: BLTouch
 
 ManualMesh: clean
@@ -45,7 +45,7 @@ ManualMesh: clean
 	cp $(AQUILA_CONFIG_TPL_DIR)/ManualMesh-3x3/Configuration_adv.h $(MARLIN_DIR)/Configuration_adv.h
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
 	sed -i 's/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $(GRID)/g' $(MARLIN_DIR)/Configuration.h
-	$(PLATFORMIO) run $(PLATFORMIO_FLAGS)
+	FIMWARE_NAME=$(FIRMWARE_NAME) $(PLATFORMIO) run $(PLATFORMIO_FLAGS)
 .PHONY: Manual-Mesh
 
 UBL-BLTouch: clean
@@ -54,7 +54,7 @@ UBL-BLTouch: clean
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
 	sed -i 's/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $(GRID)/g' $(MARLIN_DIR)/Configuration.h
 	sed -i 's/[^ ]*#define BLTOUCH_HS_MODE/$(DISABLE_HS_BLTOUCH)#define BLTOUCH_HS_MODE/g' Marlin/Configuration_adv.h
-	API_USER=wewewewewe $(PLATFORMIO) run $(PLATFORMIO_FLAGS)
+	FIMWARE_NAME=$(FIRMWARE_NAME) $(PLATFORMIO) run $(PLATFORMIO_FLAGS)
 .PHONY: UBL-BLTouch
 
 UBL-NoProbe: clean
@@ -62,5 +62,5 @@ UBL-NoProbe: clean
 	cp $(AQUILA_CONFIG_TPL_DIR)/UBL-NoProbe-3x3/Configuration_adv.h $(MARLIN_DIR)/Configuration_adv.h
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
 	sed -i 's/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $(GRID)/g' $(MARLIN_DIR)/Configuration.h
-	$(PLATFORMIO) run $(PLATFORMIO_FLAGS)
+	FIMWARE_NAME=$(FIRMWARE_NAME) $(PLATFORMIO) run $(PLATFORMIO_FLAGS)
 .PHONY: UBL-NoProbe
