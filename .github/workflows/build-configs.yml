@@ -46,7 +46,7 @@ jobs:
         AQUILA_VER: ${{ matrix.chip }}
         FIRMWARE_NAME_PARAMS: ${{ matrix.chip }}
         FIRMWARE_NAME: Default-NoProbe-${{ env.FIRMWARE_NAME_PARAMS }}.bin
-      run: make -f Makefile.voxelab Default-NoProbe
+      run: FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab Default-NoProbe
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -90,7 +90,7 @@ jobs:
         HS: ${{ matrix.highspeed }}
         FIRMWARE_NAME_PARAMS: ${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}
         FIRMWARE_NAME: BLTouch-${{ env.FIRMWARE_NAME_PARAMS }}.bin
-      run: make -f Makefile.voxelab BLTouch
+      run: FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab BLTouch
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -133,7 +133,7 @@ jobs:
         GRID: ${{ matrix.grid }}
         FIRMWARE_NAME_PARAMS: ${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}
         FIRMWARE_NAME: ManualMesh-${{ env.FIRMWARE_NAME_PARAMS }}.bin
-      run: make -f Makefile.voxelab ManualMesh
+      run: FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab ManualMesh
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -177,7 +177,7 @@ jobs:
         HS: ${{ matrix.highspeed }}
         FIRMWARE_NAME_PARAMS: ${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}
         FIRMWARE_NAME: UBL-BLTouch-${{ env.FIRMWARE_NAME_PARAMS }}.bin
-      run: make -f Makefile.voxelab UBL-BLTouch
+      run: FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab UBL-BLTouch
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
@@ -220,7 +220,7 @@ jobs:
         GRID: ${{ matrix.grid }}
         FIRMWARE_NAME_PARAMS: ${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}
         FIRMWARE_NAME: UBL-NoProbe-${{ env.FIRMWARE_NAME_PARAMS }}.bin
-      run: make -f Makefile.voxelab UBL-NoProbe
+      run: FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab UBL-NoProbe
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
