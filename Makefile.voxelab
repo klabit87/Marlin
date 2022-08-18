@@ -1,15 +1,13 @@
 # Set needed variables.
-AQUILA_CONFIG_TPL_DIR=config/aquila_templates
-MARLIN_DIR=Marlin
-PLATFORMIO=pio
-PLATFORMIO_MAIN_DIR=.pio
-PLATFORMIO_BUILD_DIR=$(PLATFORMIO_MAIN_DIR)/build
-PLATFORMIO_CONF=platformio.ini
-
-
-
-# sed -i "s/[^ ]*#define BLTOUCH_HS_MODE/$TEMP#define BLTOUCH_HS_MODE/g" Marlin/Configuration_adv.h
-# pio run
+AQUILA_VER ?= G32
+AQUILA_CONFIG_TPL_DIR := config/aquila_templates
+MARLIN_DIR := Marlin
+PLATFORMIO := pio
+PLATFORMIO_FLAGS := '--release'
+PLATFORMIO_MAIN_DIR := .pio
+PLATFORMIO_BUILD_DIR := $(PLATFORMIO_MAIN_DIR)/build
+PLATFORMIO_CONF := platformio.ini
+GRID := 3
 
 # Evaluate HS (High Speed) variable if it's been enabled.
 ifeq ($(HS), true)
@@ -28,7 +26,7 @@ Default-NoProbe: clean
 	cp $(AQUILA_CONFIG_TPL_DIR)/Default-NoProbe/Configuration.h $(MARLIN_DIR)/Configuration.h
 	cp $(AQUILA_CONFIG_TPL_DIR)/Default-NoProbe/Configuration_adv.h $(MARLIN_DIR)/Configuration_adv.h
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
-	$(PLATFORMIO) run
+	$(PLATFORMIO) run $(PLATFORMIO_FLAGS)
 .PHONY: Default-NoProbe
 
 BLTouch: clean
@@ -37,7 +35,7 @@ BLTouch: clean
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
 	sed -i 's/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $(GRID)/g' $(MARLIN_DIR)/Configuration.h
 	sed -i 's/[^ ]*#define BLTOUCH_HS_MODE/$(DISABLE_HS_BLTOUCH)#define BLTOUCH_HS_MODE/g' Marlin/Configuration_adv.h
-	$(PLATFORMIO) run
+	$(PLATFORMIO) run $(PLATFORMIO_FLAGS)
 .PHONY: BLTouch
 
 ManualMesh: clean
@@ -45,7 +43,7 @@ ManualMesh: clean
 	cp $(AQUILA_CONFIG_TPL_DIR)/ManualMesh-3x3/Configuration_adv.h $(MARLIN_DIR)/Configuration_adv.h
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
 	sed -i 's/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $(GRID)/g' $(MARLIN_DIR)/Configuration.h
-	$(PLATFORMIO) run
+	$(PLATFORMIO) run $(PLATFORMIO_FLAGS)
 .PHONY: Manual-Mesh
 
 UBL-BLTouch: clean
@@ -54,7 +52,7 @@ UBL-BLTouch: clean
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
 	sed -i 's/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $(GRID)/g' $(MARLIN_DIR)/Configuration.h
 	sed -i 's/[^ ]*#define BLTOUCH_HS_MODE/$(DISABLE_HS_BLTOUCH)#define BLTOUCH_HS_MODE/g' Marlin/Configuration_adv.h
-	$(PLATFORMIO) run
+	$(PLATFORMIO) run $(PLATFORMIO_FLAGS)
 .PHONY: UBL-BLTouch
 
 UBL-NoProbe: clean
@@ -62,5 +60,5 @@ UBL-NoProbe: clean
 	cp $(AQUILA_CONFIG_TPL_DIR)/UBL-NoProbe-3x3/Configuration_adv.h $(MARLIN_DIR)/Configuration_adv.h
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
 	sed -i 's/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $(GRID)/g' $(MARLIN_DIR)/Configuration.h
-	$(PLATFORMIO) run
+	$(PLATFORMIO) run $(PLATFORMIO_FLAGS)
 .PHONY: UBL-NoProbe
