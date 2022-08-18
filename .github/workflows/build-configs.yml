@@ -51,7 +51,7 @@ jobs:
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.FIRMWARE_NAME }}.bin
+        name: ${{ env.FIRMWARE_NAME }}
         path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
   
   Build-BLTouch:
@@ -96,7 +96,7 @@ jobs:
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.FIRMWARE_NAME }}.bin
+        name: ${{ env.FIRMWARE_NAME }}
         path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
   
   Build-ManualMesh:
@@ -140,7 +140,7 @@ jobs:
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.FIRMWARE_NAME }}.bin
+        name: ${{ env.FIRMWARE_NAME }}
         path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
  
   Build-UBL-BLTouch:
@@ -185,7 +185,7 @@ jobs:
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.FIRMWARE_NAME }}.bin
+        name: ${{ env.FIRMWARE_NAME }}
         path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
   
   Build-UBL-NoProbe:
@@ -229,5 +229,5 @@ jobs:
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.FIRMWARE_NAME }}.bin
+        name: ${{ env.FIRMWARE_NAME }}
         path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
