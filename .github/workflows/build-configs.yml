@@ -4,10 +4,13 @@ on:
   schedule:
     - cron: '0 0 * * *'
   push:
-    branches: [ marlin-2.1.1 ]
+    branches: [ main,stable,dev ]
   pull_request:
-    branches: [ marlin-2.1.1 ]
+    branches: [ main,stable,dev ]
   workflow_dispatch:
+
+env:
+  PLATFORMIO_VER: 6.1.4
 
 jobs:
   Build-Default:
@@ -23,8 +26,7 @@ jobs:
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+        restore-keys: ${{ runner.os }}-pip-
     - name: Cache PlatformIO
       uses: actions/cache@v2
       with:
@@ -34,20 +36,23 @@ jobs:
       uses: actions/setup-python@v2
     - name: Run OS Update & Install PlatformIO
       run: |
-        sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
         python -m pip install --upgrade pip
         pip install wheel
-        pip install --upgrade platformio
+        pip install platformio==$PLATFORMIO_VER
     - name: Run PlatformIO
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
-      run: make -f Makefile.voxelab Default-NoProbe
+        FIRMWARE_NAME: Default-NoProbe-${{ matrix.chip }}
+      run: |
+        FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab Default-NoProbe
+        echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: Default-NoProbe-${{ matrix.chip }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
+        name: ${{ env.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
   
   Build-BLTouch:
     name: Build BL-Touch Files
@@ -64,8 +69,7 @@ jobs:
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+        restore-keys: ${{ runner.os }}-pip-
     - name: Cache PlatformIO
       uses: actions/cache@v2
       with:
@@ -75,22 +79,25 @@ jobs:
       uses: actions/setup-python@v2
     - name: Run OS Update & Install PlatformIO
       run: |
-        sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
         python -m pip install --upgrade pip
         pip install wheel
-        pip install --upgrade platformio
+        pip install platformio==$PLATFORMIO_VER
     - name: Run PlatformIO
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
         HS: ${{ matrix.highspeed }}
-      run: make -f Makefile.voxelab BLTouch
+        FIRMWARE_NAME: BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}
+      run: |
+        FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab BLTouch
+        echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
+        name: ${{ env.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
   
   Build-ManualMesh:
     name: Build Manual-Mesh Files
@@ -117,21 +124,24 @@ jobs:
       uses: actions/setup-python@v2
     - name: Run OS Update & Install PlatformIO
       run: |
-        sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
         python -m pip install --upgrade pip
         pip install wheel
-        pip install --upgrade platformio
+        pip install platformio==$PLATFORMIO_VER
     - name: Run PlatformIO
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
-      run: make -f Makefile.voxelab ManualMesh
+        FIRMWARE_NAME: ManualMesh-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}
+      run: |
+        FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab ManualMesh
+        echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ManualMesh-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
+        name: ${{ env.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
  
   Build-UBL-BLTouch:
     name: Build UBL with BL-Touch Files
@@ -148,8 +158,7 @@ jobs:
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+        restore-keys: ${{ runner.os }}-pip-
     - name: Cache PlatformIO
       uses: actions/cache@v2
       with:
@@ -159,22 +168,25 @@ jobs:
       uses: actions/setup-python@v2
     - name: Run OS Update & Install PlatformIO
       run: |
-        sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
         python -m pip install --upgrade pip
         pip install wheel
-        pip install --upgrade platformio
+        pip install platformio==$PLATFORMIO_VER
     - name: Run PlatformIO
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
         HS: ${{ matrix.highspeed }}
-      run: make -f Makefile.voxelab UBL-BLTouch
+        FIRMWARE_NAME: UBL-BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}
+      run: |
+        FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab UBL-BLTouch
+        echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: UBL-BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
+        name: ${{ env.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
   
   Build-UBL-NoProbe:
     name: Build UBL with NoProbe Files
@@ -201,18 +213,21 @@ jobs:
       uses: actions/setup-python@v2
     - name: Run OS Update & Install PlatformIO
       run: |
-        sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
         python -m pip install --upgrade pip
         pip install wheel
-        pip install --upgrade platformio
+        pip install platformio==$PLATFORMIO_VER
     - name: Run PlatformIO
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
-      run: make -f Makefile.voxelab UBL-NoProbe
+        FIRMWARE_NAME: UBL-NoProbe-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}
+      run: |
+        FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab UBL-NoProbe
+        echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: UBL-NoProbe-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
+        name: ${{ env.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
