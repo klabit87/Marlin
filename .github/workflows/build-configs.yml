@@ -45,12 +45,16 @@ jobs:
       env:
         AQUILA_VER: ${{ matrix.chip }}
         FIRMWARE_NAME: Default-NoProbe-${{ matrix.chip }}
-      run: FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab Default-NoProbe
+      run: |
+	    # Inject firmware binary version so that the next step can pick it up.
+	    echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
+		# Run the build. 
+		FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab Default-NoProbe
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.env.FIRMWARE_NAME }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ steps.build_configs.env.FIRMWARE_NAME }}.bin
+        name: ${{ env.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
   
   Build-BLTouch:
     name: Build BL-Touch Files
@@ -88,12 +92,16 @@ jobs:
         GRID: ${{ matrix.grid }}
         HS: ${{ matrix.highspeed }}
         FIRMWARE_NAME: BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}
-      run: FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab BLTouch
+      run: |
+	    # Inject firmware binary version so that the next step can pick it up.
+	    echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
+		# Run the build. 
+		FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab BLTouch
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.env.FIRMWARE_NAME }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ steps.build_configs.env.FIRMWARE_NAME }}.bin
+        name: ${{ env.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
   
   Build-ManualMesh:
     name: Build Manual-Mesh Files
@@ -130,12 +138,16 @@ jobs:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
         FIRMWARE_NAME: ManualMesh-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}
-      run: FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab ManualMesh
+      run: |
+	    # Inject firmware binary version so that the next step can pick it up.
+	    echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
+		# Run the build.
+		FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab ManualMesh
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.env.FIRMWARE_NAME }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ steps.build_configs.env.FIRMWARE_NAME }}.bin
+        name: ${{ env.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
  
   Build-UBL-BLTouch:
     name: Build UBL with BL-Touch Files
@@ -173,12 +185,16 @@ jobs:
         GRID: ${{ matrix.grid }}
         HS: ${{ matrix.highspeed }}
         FIRMWARE_NAME: UBL-BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}
-      run: FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab UBL-BLTouch
+      run: |
+	    # Inject firmware binary version so that the next step can pick it up.
+	    echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
+		# Run the build.
+		FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab UBL-BLTouch
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.env.FIRMWARE_NAME }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ steps.build_configs.env.FIRMWARE_NAME }}.bin
+        name: ${{ env.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
   
   Build-UBL-NoProbe:
     name: Build UBL with NoProbe Files
@@ -215,9 +231,13 @@ jobs:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
         FIRMWARE_NAME: UBL-NoProbe-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}
-      run: FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab UBL-NoProbe
+      run: |
+	    # Inject firmware binary version so that the next step can pick it up.
+	    echo "FIRMWARE_NAME=${{ env.FIRMWARE_NAME }}" >> $GITHUB_ENV
+		# Run the build.
+	    FIRMWARE_NAME=${{ env.FIRMWARE_NAME }} make -f Makefile.voxelab UBL-NoProbe
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ steps.build_configs.env.FIRMWARE_NAME }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ steps.build_configs.env.FIRMWARE_NAME }}.bin
+        name: ${{ env.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
