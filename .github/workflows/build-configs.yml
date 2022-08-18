@@ -39,17 +39,19 @@ jobs:
         sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
         python -m pip install --upgrade pip
         pip install wheel
-        pip install  platformio==$PLATFORMIO_VER
+        pip install platformio==$PLATFORMIO_VER
     - name: Run PlatformIO
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
+        FIRMWARE_NAME_PARAMS: ${{ matrix.chip }}
+        FIRMWARE_NAME: Default-NoProbe-${{ env.FIRMWARE_NAME_PARAMS }}.bin
       run: make -f Makefile.voxelab Default-NoProbe
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: Default-NoProbe-${{ matrix.chip }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
+        name: ${{ env.FIRMWARE_NAME }}
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}
   
   Build-BLTouch:
     name: Build BL-Touch Files
@@ -79,19 +81,21 @@ jobs:
         sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
         python -m pip install --upgrade pip
         pip install wheel
-        pip install  platformio==$PLATFORMIO_VER
+        pip install platformio==$PLATFORMIO_VER
     - name: Run PlatformIO
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
         HS: ${{ matrix.highspeed }}
+        FIRMWARE_NAME_PARAMS: ${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}
+        FIRMWARE_NAME: BLTouch-${{ env.FIRMWARE_NAME_PARAMS }}.bin
       run: make -f Makefile.voxelab BLTouch
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
+        name: ${{ env.FIRMWARE_NAME }}
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}
   
   Build-ManualMesh:
     name: Build Manual-Mesh Files
@@ -121,18 +125,20 @@ jobs:
         sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
         python -m pip install --upgrade pip
         pip install wheel
-        pip install  platformio==$PLATFORMIO_VER
+        pip install platformio==$PLATFORMIO_VER
     - name: Run PlatformIO
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
+        FIRMWARE_NAME_PARAMS: ${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}
+        FIRMWARE_NAME: ManualMesh-${{ env.FIRMWARE_NAME_PARAMS }}.bin
       run: make -f Makefile.voxelab ManualMesh
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ManualMesh-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
+        name: ${{ env.FIRMWARE_NAME }}
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}
  
   Build-UBL-BLTouch:
     name: Build UBL with BL-Touch Files
@@ -162,19 +168,21 @@ jobs:
         sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
         python -m pip install --upgrade pip
         pip install wheel
-        pip install  platformio==$PLATFORMIO_VER
+        pip install platformio==$PLATFORMIO_VER
     - name: Run PlatformIO
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
         HS: ${{ matrix.highspeed }}
+        FIRMWARE_NAME_PARAMS: ${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}
+        FIRMWARE_NAME: UBL-BLTouch-${{ env.FIRMWARE_NAME_PARAMS }}.bin
       run: make -f Makefile.voxelab UBL-BLTouch
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: UBL-BLTouch-${{ matrix.grid }}x${{ matrix.grid }}${{ matrix.highspeed == 'true' && '-HS' || '' }}-${{ matrix.chip }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
+        name: ${{ env.FIRMWARE_NAME }}
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}
   
   Build-UBL-NoProbe:
     name: Build UBL with NoProbe Files
@@ -204,15 +212,17 @@ jobs:
         sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
         python -m pip install --upgrade pip
         pip install wheel
-        pip install  platformio==$PLATFORMIO_VER
+        pip install platformio==$PLATFORMIO_VER
     - name: Run PlatformIO
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
         GRID: ${{ matrix.grid }}
+        FIRMWARE_NAME_PARAMS: ${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}
+        FIRMWARE_NAME: UBL-NoProbe-${{ env.FIRMWARE_NAME_PARAMS }}.bin
       run: make -f Makefile.voxelab UBL-NoProbe
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: UBL-NoProbe-${{ matrix.grid }}x${{ matrix.grid }}-${{ matrix.chip }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/firmware*.bin
+        name: ${{ env.FIRMWARE_NAME }}
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}

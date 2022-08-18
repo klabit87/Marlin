@@ -8,18 +8,20 @@ PLATFORMIO_MAIN_DIR := .pio
 PLATFORMIO_BUILD_DIR := $(PLATFORMIO_MAIN_DIR)/build
 PLATFORMIO_CONF := platformio.ini
 GRID := 3
+FIRMWARE_NAME := $(shell date +"firmware-%m%d%Y-%H%M%S")
+export FIRMWARE_NAME
 
 # Evaluate HS (High Speed) variable if it's been enabled.
 ifeq ($(HS), true)
- DISABLE_HS_BLTOUCH=
+ DISABLE_HS_BLTOUCH =
 else
- DISABLE_HS_BLTOUCH=\/\/
+ DISABLE_HS_BLTOUCH = \/\/
 endif
 
 clean:
-	rm -rf $(ALT_BUILD_OUTPUT_DIR)
-	rm -rf $(PLATFORMIO_BUILD_DIR)
-	rm -rf $(PLATFORMIO_MAIN_DIR)
+	rm -rvf $(ALT_BUILD_OUTPUT_DIR)
+	rm -rvf $(PLATFORMIO_BUILD_DIR)
+	rm -rvf $(PLATFORMIO_MAIN_DIR)
 .PHONY: clean
 
 Default-NoProbe: clean
@@ -52,7 +54,7 @@ UBL-BLTouch: clean
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
 	sed -i 's/#define GRID_MAX_POINTS_X.*/#define GRID_MAX_POINTS_X $(GRID)/g' $(MARLIN_DIR)/Configuration.h
 	sed -i 's/[^ ]*#define BLTOUCH_HS_MODE/$(DISABLE_HS_BLTOUCH)#define BLTOUCH_HS_MODE/g' Marlin/Configuration_adv.h
-	$(PLATFORMIO) run $(PLATFORMIO_FLAGS)
+	API_USER=wewewewewe $(PLATFORMIO) run $(PLATFORMIO_FLAGS)
 .PHONY: UBL-BLTouch
 
 UBL-NoProbe: clean
