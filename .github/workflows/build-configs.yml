@@ -49,8 +49,8 @@ jobs:
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.FIRMWARE_NAME }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
+        name: ${{ env.build_configs.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.build_configs.FIRMWARE_NAME }}.bin
   
   Build-BLTouch:
     name: Build BL-Touch Files
@@ -92,8 +92,8 @@ jobs:
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.FIRMWARE_NAME }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
+        name: ${{ env.build_configs.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.build_configs.FIRMWARE_NAME }}.bin
   
   Build-ManualMesh:
     name: Build Manual-Mesh Files
@@ -134,8 +134,8 @@ jobs:
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.FIRMWARE_NAME }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
+        name: ${{ env.build_configs.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.build_configs.FIRMWARE_NAME }}.bin
  
   Build-UBL-BLTouch:
     name: Build UBL with BL-Touch Files
@@ -177,8 +177,8 @@ jobs:
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.FIRMWARE_NAME }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
+        name: ${{ env.build_configs.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.build_configs.FIRMWARE_NAME }}.bin
   
   Build-UBL-NoProbe:
     name: Build UBL with NoProbe Files
@@ -219,5 +219,5 @@ jobs:
     - name: Upload Build Binary
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.FIRMWARE_NAME }}.bin
-        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.FIRMWARE_NAME }}.bin
+        name: ${{ env.build_configs.FIRMWARE_NAME }}.bin
+        path: .pio/build/STM32F103RET6_voxelab_aquila_${{ matrix.chip }}/${{ env.build_configs.FIRMWARE_NAME }}.bin
