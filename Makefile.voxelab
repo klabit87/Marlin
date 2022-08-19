@@ -7,7 +7,7 @@ PLATFORMIO_FLAGS =
 PLATFORMIO_MAIN_DIR := .pio
 PLATFORMIO_BUILD_DIR := $(PLATFORMIO_MAIN_DIR)/build
 PLATFORMIO_CONF := platformio.ini
-GRID := 3
+GRID ?= 3
 FIRMWARE_NAME ?= $(shell date +"firmware-%m%d%Y-%H%M%S")
 export FIRMWARE_NAME
 
