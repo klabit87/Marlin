@@ -11,3 +11,7 @@ To update the graphics and icons on the display:
 ## Troubleshooting
 If flashing is not working (e.g. the blue screen only flashes for a second before the orange screen):
 - Reformat the SD card in FAT32 with 4k allocations
+
+## Credits / Special Thanks
+
+* [dwin-ico-tools](https://github.com/MarlinFirmware/Marlin) created by [Brent Burton](https://github.com/b-pub). (Licensed under GPLv3, see `icon_tools/dwin-ico-tools/LICENSE` file for details)

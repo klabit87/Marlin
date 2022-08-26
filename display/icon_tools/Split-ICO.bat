@@ -1,1 +1,1 @@
-for /f %%f in ('dir *.ICO /B /O:-D') do Scripts\splitico.py %%f %%f-Icons
+for /f %%f in ('dir *.ICO /B /O:-D') do dwin-ico-tools\splitico.py %%f %%f-Icons
