@@ -1,6 +1,6 @@
 # Marlin Firmware (Voxelab Aquila)
 
-Fork of [Jyers](https://github.com/alexqzd/Marlin) Marlin Firmware for Voxelab Aquila Based 3D Printers 
+Fork of [Jyers](https://github.com/alexqzd/Marlin) Marlin Firmware for Voxelab Aquila Based 3D Printers.
 
 ## General Info
 
@@ -40,7 +40,18 @@ Assuming that your building this via a `Debian` based Linux distribution such as
    ```
    make <TARGET>
    ```
+   
    _Targets targeting Aquila printers can be found in the `aquila.mk` makefile._
+
+## Noteable Directories
+
+1.  `config` - Where all of the custom config files for Marlin reside.
+
+    - `config/alexqzd` - Alexqzd main configuration files reside here.
+    - `config/aquila_templates` - Multiple configurations for the Aquila line of printers reside here.
+    - `config/jyers` - Jyers main configuration files reside here.
+
+2. `display` - Config / tools / firmware files for the DWIN display.
 
 ## License
 
