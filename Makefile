@@ -1,5 +1,5 @@
 # Include additional makefiles
-include aquila.mk
+include *.mk
 
 help:
 	@echo "Tasks for local development:"
