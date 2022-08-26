@@ -28,7 +28,7 @@ clean:
 .PHONY: clean
 
 Default-NoProbe:
-    mkdir -p $(PLATFORMIO_BUILD_DIR)
+	mkdir -p $(PLATFORMIO_BUILD_DIR)
 	cp $(AQUILA_CONFIG_TPL_DIR)/Default-NoProbe/Configuration.h $(MARLIN_DIR)/Configuration.h
 	cp $(AQUILA_CONFIG_TPL_DIR)/Default-NoProbe/Configuration_adv.h $(MARLIN_DIR)/Configuration_adv.h
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
@@ -42,7 +42,7 @@ Default-NoProbe:
 .PHONY: Default-NoProbe
 
 BLTouch:
-    mkdir -p $(PLATFORMIO_BUILD_DIR)
+	mkdir -p $(PLATFORMIO_BUILD_DIR)
 	cp $(AQUILA_CONFIG_TPL_DIR)/BLTouch-3x3/Configuration.h $(MARLIN_DIR)/Configuration.h
 	cp $(AQUILA_CONFIG_TPL_DIR)/BLTouch-3x3/Configuration_adv.h $(MARLIN_DIR)/Configuration_adv.h
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
@@ -58,7 +58,7 @@ BLTouch:
 .PHONY: BLTouch
 
 ManualMesh:
-    mkdir -p $(PLATFORMIO_BUILD_DIR)
+	mkdir -p $(PLATFORMIO_BUILD_DIR)
 	cp $(AQUILA_CONFIG_TPL_DIR)/ManualMesh-3x3/Configuration.h $(MARLIN_DIR)/Configuration.h
 	cp $(AQUILA_CONFIG_TPL_DIR)/ManualMesh-3x3/Configuration_adv.h $(MARLIN_DIR)/Configuration_adv.h
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
@@ -73,7 +73,7 @@ ManualMesh:
 .PHONY: Manual-Mesh
 
 UBL-BLTouch:
-    mkdir -p $(PLATFORMIO_BUILD_DIR)
+	mkdir -p $(PLATFORMIO_BUILD_DIR)
 	cp $(AQUILA_CONFIG_TPL_DIR)/UBL-BLTouch-10x10/Configuration.h $(MARLIN_DIR)/Configuration.h
 	cp $(AQUILA_CONFIG_TPL_DIR)/UBL-BLTouch-10x10/Configuration_adv.h $(MARLIN_DIR)/Configuration_adv.h
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
@@ -89,7 +89,7 @@ UBL-BLTouch:
 .PHONY: UBL-BLTouch
 
 UBL-NoProbe:
-    mkdir -p $(PLATFORMIO_BUILD_DIR)
+	mkdir -p $(PLATFORMIO_BUILD_DIR)
 	cp $(AQUILA_CONFIG_TPL_DIR)/UBL-NoProbe-3x3/Configuration.h $(MARLIN_DIR)/Configuration.h
 	cp $(AQUILA_CONFIG_TPL_DIR)/UBL-NoProbe-3x3/Configuration_adv.h $(MARLIN_DIR)/Configuration_adv.h
 	sed -i 's/default_envs =.*/default_envs = STM32F103RET6_voxelab_aquila_$(AQUILA_VER)/g' $(PLATFORMIO_CONF)
