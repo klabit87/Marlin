@@ -22,8 +22,6 @@ jobs:
       matrix:
         chip: [G32,N32]
     steps:
-    - name: Run OS Update
-      run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Inject requirements.txt Dependencies
@@ -63,8 +61,6 @@ jobs:
         grid: [3,4,5,9]
         highspeed: [true,false]
     steps:
-    - name: Run OS Update
-      run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Inject requirements.txt Dependencies
@@ -105,8 +101,6 @@ jobs:
         chip: [G32,N32]
         grid: [3,4,5]
     steps:
-    - name: Run OS Update
-      run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Inject requirements.txt Dependencies
@@ -147,8 +141,6 @@ jobs:
         grid: [10,15]
         highspeed: [true,false]
     steps:
-    - name: Run OS Update
-      run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Inject requirements.txt Dependencies
@@ -189,8 +181,6 @@ jobs:
         chip: [G32,N32]
         grid: [3,5]
     steps:
-    - name: Run OS Update
-      run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Inject requirements.txt Dependencies
