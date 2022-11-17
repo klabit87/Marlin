@@ -22,20 +22,21 @@ jobs:
       matrix:
         chip: [G32,N32]
     steps:
+    - name: Run OS Update
+      run: |
+        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
     - name: Checkout code
       uses: actions/checkout@v3
+    - name: Inject requirements.txt dependencies
+      run: |
+	  	echo "wheel" >> requirements.txt
+        echo "platformio==$PLATFORMIO_VER" > requirements.txt
     - name: Setup Python and cache
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
         cache: 'pip' # caching pip dependencies
-    - name: Run OS Update & Install PlatformIO
-      run: |
-        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
-        python -m pip install --upgrade pip
-        pip install wheel
-        pip install platformio==$PLATFORMIO_VER
-    - name: Run PlatformIO
+    - name: Run Build
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
@@ -60,20 +61,21 @@ jobs:
         grid: [3,4,5,9]
         highspeed: [true,false]
     steps:
+    - name: Run OS Update
+      run: |
+        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
     - name: Checkout code
       uses: actions/checkout@v3
+    - name: Inject requirements.txt dependencies
+      run: |
+	  	echo "wheel" >> requirements.txt
+        echo "platformio==$PLATFORMIO_VER" > requirements.txt
     - name: Setup Python and cache
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
         cache: 'pip' # caching pip dependencies
-    - name: Run OS Update & Install PlatformIO
-      run: |
-        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
-        python -m pip install --upgrade pip
-        pip install wheel
-        pip install platformio==$PLATFORMIO_VER
-    - name: Run PlatformIO
+    - name: Run Build
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
@@ -99,20 +101,21 @@ jobs:
         chip: [G32,N32]
         grid: [3,4,5]
     steps:
+    - name: Run OS Update
+      run: |
+        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
     - name: Checkout code
       uses: actions/checkout@v3
+    - name: Inject requirements.txt dependencies
+      run: |
+	  	echo "wheel" >> requirements.txt
+        echo "platformio==$PLATFORMIO_VER" > requirements.txt
     - name: Setup Python and cache
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
         cache: 'pip' # caching pip dependencies
-    - name: Run OS Update & Install PlatformIO
-      run: |
-        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
-        python -m pip install --upgrade pip
-        pip install wheel
-        pip install platformio==$PLATFORMIO_VER
-    - name: Run PlatformIO
+    - name: Run Build
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
@@ -138,20 +141,21 @@ jobs:
         grid: [10,15]
         highspeed: [true,false]
     steps:
+    - name: Run OS Update
+      run: |
+        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
     - name: Checkout code
       uses: actions/checkout@v3
+    - name: Inject requirements.txt dependencies
+      run: |
+	  	echo "wheel" >> requirements.txt
+        echo "platformio==$PLATFORMIO_VER" > requirements.txt
     - name: Setup Python and cache
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
         cache: 'pip' # caching pip dependencies
-    - name: Run OS Update & Install PlatformIO
-      run: |
-        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
-        python -m pip install --upgrade pip
-        pip install wheel
-        pip install platformio==$PLATFORMIO_VER
-    - name: Run PlatformIO
+    - name: Run Build
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
@@ -177,20 +181,21 @@ jobs:
         chip: [G32,N32]
         grid: [3,5]
     steps:
+    - name: Run OS Update
+      run: |
+        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
     - name: Checkout code
       uses: actions/checkout@v3
+    - name: Inject requirements.txt dependencies
+      run: |
+	  	echo "wheel" >> requirements.txt
+        echo "platformio==$PLATFORMIO_VER" > requirements.txt
     - name: Setup Python and cache
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
         cache: 'pip' # caching pip dependencies
-    - name: Run OS Update & Install PlatformIO
-      run: |
-        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
-        python -m pip install --upgrade pip
-        pip install wheel
-        pip install platformio==$PLATFORMIO_VER
-    - name: Run PlatformIO
+    - name: Run Build
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
