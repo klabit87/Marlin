@@ -13,6 +13,7 @@ on:
 
 env:
   PLATFORMIO_VER: 6.1.5
+  PYTHON_VER: 3.11
 
 jobs:
   Build-Default:
@@ -22,27 +23,20 @@ jobs:
       matrix:
         chip: [G32,N32]
     steps:
-    - uses: actions/checkout@v3
-    - name: Cache pip
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: ${{ runner.os }}-pip-
-    - name: Cache PlatformIO
-      uses: actions/cache@v3
-      with:
-        path: ~/.platformio
-        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-    - name: Set up Python
-      uses: actions/setup-python@v4
-    - name: Run OS Update & Install PlatformIO
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Inject requirements.txt Dependencies
       run: |
-        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
-        python -m pip install --upgrade pip
-        pip install wheel
-        pip install platformio==$PLATFORMIO_VER
-    - name: Run PlatformIO
+        echo "wheel" > requirements.txt
+        echo "platformio==$PLATFORMIO_VER" >> requirements.txt
+    - name: Setup Python and Cache
+      uses: actions/setup-python@v4
+      with:
+        python-version: '${{ env.PYTHON_VER }}'
+        cache: 'pip' # caching pip dependencies
+    - name: Setup Build Dependencies
+      run: pip install -r requirements.txt
+    - name: Run Build
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
@@ -61,33 +55,27 @@ jobs:
   Build-BLTouch:
     name: Build BL-Touch Files
     runs-on: ubuntu-latest
+    needs: Build-Default
     strategy:
       matrix:
         chip: [G32,N32]
         grid: [3,4,5,9]
         highspeed: [true,false]
     steps:
-    - uses: actions/checkout@v3
-    - name: Cache pip
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: ${{ runner.os }}-pip-
-    - name: Cache PlatformIO
-      uses: actions/cache@v3
-      with:
-        path: ~/.platformio
-        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-    - name: Set up Python
-      uses: actions/setup-python@v4
-    - name: Run OS Update & Install PlatformIO
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Inject requirements.txt Dependencies
       run: |
-        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
-        python -m pip install --upgrade pip
-        pip install wheel
-        pip install platformio==$PLATFORMIO_VER
-    - name: Run PlatformIO
+        echo "wheel" > requirements.txt
+        echo "platformio==$PLATFORMIO_VER" >> requirements.txt
+    - name: Setup Python and Cache
+      uses: actions/setup-python@v4
+      with:
+        python-version: '${{ env.PYTHON_VER }}'
+        cache: 'pip' # caching pip dependencies
+    - name: Setup Build Dependencies
+      run: pip install -r requirements.txt
+    - name: Run Build
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
@@ -108,33 +96,26 @@ jobs:
   Build-ManualMesh:
     name: Build Manual-Mesh Files
     runs-on: ubuntu-latest
+    needs: Build-Default
     strategy:
       matrix:
         chip: [G32,N32]
         grid: [3,4,5]
     steps:
-    - uses: actions/checkout@v3
-    - name: Cache pip
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-    - name: Cache PlatformIO
-      uses: actions/cache@v3
-      with:
-        path: ~/.platformio
-        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-    - name: Set up Python
-      uses: actions/setup-python@v4
-    - name: Run OS Update & Install PlatformIO
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Inject requirements.txt Dependencies
       run: |
-        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
-        python -m pip install --upgrade pip
-        pip install wheel
-        pip install platformio==$PLATFORMIO_VER
-    - name: Run PlatformIO
+        echo "wheel" > requirements.txt
+        echo "platformio==$PLATFORMIO_VER" >> requirements.txt
+    - name: Setup Python and Cache
+      uses: actions/setup-python@v4
+      with:
+        python-version: '${{ env.PYTHON_VER }}'
+        cache: 'pip' # caching pip dependencies
+    - name: Setup Build Dependencies
+      run: pip install -r requirements.txt
+    - name: Run Build
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
@@ -154,33 +135,27 @@ jobs:
   Build-UBL-BLTouch:
     name: Build UBL with BL-Touch Files
     runs-on: ubuntu-latest
+    needs: Build-Default
     strategy:
       matrix:
         chip: [G32,N32]
         grid: [10,15]
         highspeed: [true,false]
     steps:
-    - uses: actions/checkout@v3
-    - name: Cache pip
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: ${{ runner.os }}-pip-
-    - name: Cache PlatformIO
-      uses: actions/cache@v3
-      with:
-        path: ~/.platformio
-        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-    - name: Set up Python
-      uses: actions/setup-python@v4
-    - name: Run OS Update & Install PlatformIO
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Inject requirements.txt Dependencies
       run: |
-        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
-        python -m pip install --upgrade pip
-        pip install wheel
-        pip install platformio==$PLATFORMIO_VER
-    - name: Run PlatformIO
+        echo "wheel" > requirements.txt
+        echo "platformio==$PLATFORMIO_VER" >> requirements.txt
+    - name: Setup Python and Cache
+      uses: actions/setup-python@v4
+      with:
+        python-version: '${{ env.PYTHON_VER }}'
+        cache: 'pip' # caching pip dependencies
+    - name: Setup Build Dependencies
+      run: pip install -r requirements.txt
+    - name: Run Build
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
@@ -201,33 +176,26 @@ jobs:
   Build-UBL-NoProbe:
     name: Build UBL with NoProbe Files
     runs-on: ubuntu-latest
+    needs: Build-Default
     strategy:
       matrix:
         chip: [G32,N32]
         grid: [3,5]
     steps:
-    - uses: actions/checkout@v3
-    - name: Cache pip
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-    - name: Cache PlatformIO
-      uses: actions/cache@v3
-      with:
-        path: ~/.platformio
-        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-    - name: Set up Python
-      uses: actions/setup-python@v4
-    - name: Run OS Update & Install PlatformIO
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Inject requirements.txt Dependencies
       run: |
-        sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
-        python -m pip install --upgrade pip
-        pip install wheel
-        pip install platformio==$PLATFORMIO_VER
-    - name: Run PlatformIO
+        echo "wheel" > requirements.txt
+        echo "platformio==$PLATFORMIO_VER" >> requirements.txt
+    - name: Setup Python and Cache
+      uses: actions/setup-python@v4
+      with:
+        python-version: '${{ env.PYTHON_VER }}'
+        cache: 'pip' # caching pip dependencies
+    - name: Setup Build Dependencies
+      run: pip install -r requirements.txt
+    - name: Run Build
       id: build_configs
       env:
         AQUILA_VER: ${{ matrix.chip }}
