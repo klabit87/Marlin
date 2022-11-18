@@ -13,6 +13,7 @@ on:
 
 env:
   PLATFORMIO_VER: 6.1.5
+  PYTHON_VER: 3.11
 
 jobs:
   Build-Default:
@@ -31,7 +32,7 @@ jobs:
     - name: Setup Python and Cache
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: '${{ env.PYTHON_VER }}'
         cache: 'pip' # caching pip dependencies
     - name: Setup Build Dependencies
       run: pip install -r requirements.txt
@@ -70,7 +71,7 @@ jobs:
     - name: Setup Python and Cache
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: '${{ env.PYTHON_VER }}'
         cache: 'pip' # caching pip dependencies
     - name: Setup Build Dependencies
       run: pip install -r requirements.txt
@@ -110,7 +111,7 @@ jobs:
     - name: Setup Python and Cache
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: '${{ env.PYTHON_VER }}'
         cache: 'pip' # caching pip dependencies
     - name: Setup Build Dependencies
       run: pip install -r requirements.txt
@@ -150,7 +151,7 @@ jobs:
     - name: Setup Python and Cache
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: '${{ env.PYTHON_VER }}'
         cache: 'pip' # caching pip dependencies
     - name: Setup Build Dependencies
       run: pip install -r requirements.txt
@@ -190,7 +191,7 @@ jobs:
     - name: Setup Python and Cache
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: '${{ env.PYTHON_VER }}'
         cache: 'pip' # caching pip dependencies
     - name: Setup Build Dependencies
       run: pip install -r requirements.txt
