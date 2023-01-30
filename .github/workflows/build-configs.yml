@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  PLATFORMIO_VER: 6.1.5
+  PLATFORMIO_VER: 6.1.6
   PYTHON_VER: 3.11
 
 jobs:
